@@ -1,0 +1,19 @@
+﻿助教你好:
+  這次的作業是使用pig的map_reduce來加快word count的速度，算是資料處理裡很基本的一塊。
+而這次的作業還有額外的使用UDF，也就是說可以從pig裡去呼叫外部自定義的函式，語言的支援也很多!
+而我這次使用的是java udf(不過建議不要使用，太吃資源了!而且官網的要自己去載src自己build pig.jar
+，經過測試 build出來的是錯的，少了一些class，不懂官網是不是在更新的時候誤放了...de了快一天，
+才知道不是自己的問題)。
+而我使用的流程是官網的標準流程 透過 java command 來call pig
+pig的script 名為 myscript.pig
+java udf 名為 UPPER.java (由官網的範例CODE所改)
+answer 存放在 answer.txt
+
+與python不同 在script一開始要先註冊你的udf function 方法為:REGISTER myudfs.jar;
+之後就是一些基本的word count指令，我的udf 是將input轉換成名子輸出(基本的字串轉換後，包成bag)，pig只要將名子做map_reduce即可。
+
+與python 不同的地方(這是我自己察覺的，可能有所不對) : python 執行的方法為 pig -x local XXX.pig
+使用的是安裝的pig程式去執行script，所以parser 也是pig做
+但是java 使用方式為: java -cp pig.jar -x local XXX.pig ，他是用java去執行的....連parser 也是pig.jar來做，
+出現過 在pig能執行的function，但是到java卻不能執行，好像是因為pig.jar版本太舊(也是de了快一天)
+真心還是覺得python好用阿!
